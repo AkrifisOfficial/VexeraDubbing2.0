@@ -92,3 +92,122 @@ async function verifyToken(token) {
     console.error('Token verification error:', error);
   }
           }
+// После успешного входа загружаем жанры и комментарии
+if (token) {
+  fetchGenres();
+  fetchRecentComments();
+}
+
+async function fetchGenres() {
+  try {
+    const response = await fetch('/api/genres', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const genres = await response.json();
+    renderGenres(genres);
+  } catch (error) {
+    console.error('Error fetching genres:', error);
+  }
+}
+
+async function fetchRecentComments() {
+  try {
+    const response = await fetch('/api/comments/recent', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const comments = await response.json();
+    renderComments(comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+  }
+}
+
+function renderGenres(genres) {
+  const container = document.getElementById('genresContainer');
+  container.innerHTML = '';
+  
+  genres.forEach(genre => {
+    const genreElement = document.createElement('div');
+    genreElement.className = 'genre-item';
+    genreElement.innerHTML = `
+      <span>${genre.name}</span>
+      <button class="delete-genre" data-id="${genre.id}">Удалить</button>
+    `;
+    container.appendChild(genreElement);
+  });
+  
+  // Добавляем обработчики для кнопок удаления
+  document.querySelectorAll('.delete-genre').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const genreId = e.target.dataset.id;
+      if (confirm('Удалить этот жанр?')) {
+        await deleteGenre(genreId);
+      }
+    });
+  });
+}
+
+function renderComments(comments) {
+  const container = document.getElementById('commentsContainer');
+  container.innerHTML = '';
+  
+  comments.forEach(comment => {
+    const commentElement = document.createElement('div');
+    commentElement.className = 'comment-item';
+    commentElement.innerHTML = `
+      <div class="comment-header">
+        <strong>${comment.username || 'Аноним'}</strong>
+        <span>${new Date(comment.created_at).toLocaleString()}</span>
+      </div>
+      <div class="comment-text">${comment.text}</div>
+      <div class="comment-actions">
+        <button class="delete-comment" data-id="${comment.id}">Удалить</button>
+      </div>
+    `;
+    container.appendChild(commentElement);
+  });
+  
+  // Добавляем обработчики для кнопок удаления
+  document.querySelectorAll('.delete-comment').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const commentId = e.target.dataset.id;
+      if (confirm('Удалить этот комментарий?')) {
+        await deleteComment(commentId);
+      }
+    });
+  });
+}
+
+async function deleteGenre(genreId) {
+  try {
+    const response = await fetch(`/api/admin/genres/${genreId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    if (response.ok) {
+      fetchGenres();
+    } else {
+      alert('Ошибка при удалении жанра');
+    }
+  } catch (error) {
+    console.error('Error deleting genre:', error);
+  }
+}
+
+async function deleteComment(commentId) {
+  try {
+    const response = await fetch(`/api/admin/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    if (response.ok) {
+      fetchRecentComments();
+    } else {
+      alert('Ошибка при удалении комментария');
+    }
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+  }
+}
