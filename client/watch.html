@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Просмотр аниме - VexeraDubbing</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">VexeraDubbing</div>
+    <nav>
+      <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="#">Аниме</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="watch-container">
+    <section class="video-player">
+      <h1 id="animeTitle"></h1>
+      <div class="video-wrapper">
+        <video controls id="videoPlayer"></video>
+      </div>
+      <div class="anime-description" id="animeDescription"></div>
+      
+      <div class="rating-section">
+        <h3>Оцените аниме:</h3>
+        <div class="stars" id="ratingStars">
+          <span data-rating="1">☆</span>
+          <span data-rating="2">☆</span>
+          <span data-rating="3">☆</span>
+          <span data-rating="4">☆</span>
+          <span data-rating="5">☆</span>
+        </div>
+        <p id="ratingMessage"></p>
+      </div>
+    </section>
+
+    <section class="comments-section">
+      <h2>Комментарии</h2>
+      <div class="add-comment">
+        <input type="text" id="commentName" placeholder="Ваше имя">
+        <textarea id="commentText" placeholder="Ваш комментарий"></textarea>
+        <button id="submitComment">Отправить</button>
+      </div>
+      <div class="comments-list" id="commentsList"></div>
+    </section>
+  </main>
+
+  <script src="js/watch.js"></script>
+</body>
+          </html>
