@@ -5,37 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VexeraDubbing - Аниме на русском</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <header>
-    <div class="logo">VexeraDubbing</div>
+    <div class="logo">
+      <i class="fas fa-play-circle"></i>
+      <span>VexeraDubbing</span>
+    </div>
     <nav>
       <ul>
-        <li><a href="#">Главная</a></li>
-        <li><a href="#">Аниме</a></li>
-        <li><a href="#">О нас</a></li>
+        <li><a href="#" class="active"><i class="fas fa-home"></i> Главная</a></li>
+        <li><a href="#"><i class="fas fa-list"></i> Каталог</a></li>
+        <li><a href="#"><i class="fas fa-info-circle"></i> О нас</a></li>
       </ul>
     </nav>
+    <div class="auth-buttons">
+      <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Войти</button>
+    </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>Лучшие аниме с русской озвучкой</h1>
-      <p>Только качественный контент от VexeraDubbing</p>
+      <div class="hero-content">
+        <h1>Лучшие аниме с русской озвучкой</h1>
+        <p>Только качественный контент от VexeraDubbing</p>
+        <div class="hero-search">
+          <input type="text" id="heroSearch" placeholder="Найти аниме...">
+          <button id="heroSearchBtn"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
     </section>
 
-    <section class="anime-list">
-      <h2>Популярное</h2>
-      <div class="anime-grid" id="animeContainer">
-        <!-- Аниме будут загружены через JS -->
+    <section class="filters-section">
+      <div class="container">
+        <div class="filters">
+          <div class="filter-group">
+            <label for="genreFilter"><i class="fas fa-tags"></i> Жанр:</label>
+            <select id="genreFilter">
+              <option value="">Все жанры</option>
+              <!-- Жанры будут загружены через JS -->
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="ratingFilter"><i class="fas fa-star"></i> Рейтинг:</label>
+            <select id="ratingFilter">
+              <option value="">Любой</option>
+              <option value="4">4+ ★</option>
+              <option value="3">3+ ★</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="sortBy"><i class="fas fa-sort"></i> Сортировка:</label>
+            <select id="sortBy">
+              <option value="title">По названию</option>
+              <option value="rating">По рейтингу</option>
+              <option value="newest">Сначала новые</option>
+            </select>
+          </div>
+          
+          <button id="applyFilters" class="apply-btn">
+            <i class="fas fa-filter"></i> Применить
+          </button>
+          
+          <button id="resetFilters" class="reset-btn">
+            <i class="fas fa-times"></i> Сбросить
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="anime-section">
+      <div class="container">
+        <div class="section-header">
+          <h2><i class="fas fa-fire"></i> Популярное аниме</h2>
+          <div class="view-options">
+            <button id="gridView" class="active"><i class="fas fa-th"></i></button>
+            <button id="listView"><i class="fas fa-list"></i></button>
+          </div>
+        </div>
+        
+        <div class="anime-container" id="animeContainer">
+          <!-- Аниме будут загружены через JS -->
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Загрузка аниме...</p>
+          </div>
+        </div>
+        
+        <div class="pagination" id="pagination">
+          <button id="firstPage" disabled><i class="fas fa-angle-double-left"></i></button>
+          <button id="prevPage" disabled><i class="fas fa-angle-left"></i></button>
+          
+          <div class="page-numbers" id="pageNumbers">
+            <!-- Номера страниц будут добавлены через JS -->
+          </div>
+          
+          <button id="nextPage"><i class="fas fa-angle-right"></i></button>
+          <button id="lastPage"><i class="fas fa-angle-double-right"></i></button>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2023 VexeraDubbing. Все права защищены.</p>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VexeraDubbing</h3>
+          <p>Лучший сайт для просмотра аниме с русской озвучкой. Только качественный контент.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Разделы</h3>
+          <ul>
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">Каталог</a></li>
+            <li><a href="#">Новинки</a></li>
+            <li><a href="#">Популярное</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Контакты</h3>
+          <ul>
+            <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
+            <li><a href="#"><i class="fab fa-vk"></i> VK</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2023 VexeraDubbing. Все права защищены.</p>
+        <div class="footer-links">
+          <a href="#">Пользовательское соглашение</a>
+          <a href="#">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <!-- Модальное окно входа -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Вход в аккаунт</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Пароль:</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit" class="submit-btn">Войти</button>
+      </form>
+      <div class="auth-links">
+        <a href="#">Забыли пароль?</a>
+        <a href="#">Регистрация</a>
+      </div>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
-</html>
+                                                    </html>
